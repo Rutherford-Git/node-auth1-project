@@ -27,10 +27,10 @@ function restricted(req, res, next) {
   }
 */
  async function checkUsernameFree(req, res, next) {
- /*  const x = await um.findBy(req.body.username)
+  const x = await um.findBy({username: req.body.username})
   console.log(x)
   //next()
-    if(x){
+    if(x.length){
         next({
         status: 422,
         message: "Username taken"
@@ -38,11 +38,11 @@ function restricted(req, res, next) {
      // res.status(422).json({message: "Username taken" })
     } else {
       next()
-    } */
+    }
     
-    console.log("check user name place holder")
+ /*    console.log("check user name place holder")
   
-    next()
+    next() */
 }
 
 /*
@@ -66,10 +66,14 @@ function checkUsernameExists() {
   }
 */
 function checkPasswordLength(req, res, next) {
-
-  console.log("check password place holder")
-  
+if (!req.body.password || req.body.password < 3) {
+  next({
+    status: 422,
+    message: "Password must be longer than 3 chars"
+  })
+}else {
   next()
+}
 }
 
 // Don't forget to add these to the `exports` object so they can be required in other modules
